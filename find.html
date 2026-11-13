@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find My College - Rajasthan College Compass</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Sticky Demo Banner -->
+  <div class="demo-banner">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span data-i18n="banner.demo">Demo data, not for real decisions.</span>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="dot"></span>
+        <span data-i18n="brand.name">Rajasthan College Compass</span>
+        <span class="badge-state">REAP</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="find.html" class="active" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="results.html" data-i18n="nav.results">Recommendations</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="branch-vs-college.html" data-i18n="nav.branch_vs_college">Branch vs College</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" aria-label="Toggle language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-toggle-btn" data-i18n="lang.toggle">हिन्दी</span>
+        </button>
+
+        <button class="mobile-menu-btn" aria-label="Open navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Wizard Form -->
+  <main class="main-content">
+    <div class="container-narrow">
+      <div class="wizard-header">
+        <h1 data-i18n="wizard.title">Find Your Ideal Engineering College</h1>
+        <p class="text-muted" data-i18n="wizard.subtitle">Complete two simple steps to see college recommendations tailored to your profile.</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="wizard-progress">
+        <div class="step-indicator active" id="step1-pill">
+          <span class="step-num">1</span>
+          <span data-i18n="wizard.step1">1. About You</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-indicator" id="step2-pill">
+          <span class="step-num">2</span>
+          <span data-i18n="wizard.step2">2. What Matters to You</span>
+        </div>
+      </div>
+
+      <!-- Form Container Card -->
+      <div class="card">
+        <form id="find-college-form" novalidate>
+          
+          <!-- ================================================================
+               STEP 1: About You
+               ================================================================ -->
+          <div id="step-1-content">
+            
+            <div class="form-row">
+              <!-- Entrance Exam -->
+              <div class="form-group">
+                <label for="exam-select" data-i18n="wizard.exam.label">Entrance Exam</label>
+                <select id="exam-select" class="form-control" required>
+                  <option value="JEE Main">JEE Main</option>
+                  <option value="REAP">REAP (Rajasthan State)</option>
+                  <option value="BITSAT">BITSAT (BITS Pilani)</option>
+                  <option value="JEE Advanced">JEE Advanced (IIT)</option>
+                  <option value="Other">Other (e.g. Banasthali)</option>
+                </select>
+              </div>
+
+              <!-- Rank or Score (Dynamic label for BITSAT) -->
+              <div class="form-group">
+                <label id="rank-label" for="rank-input" data-i18n="wizard.rank.label_rank">Your Rank</label>
+                <input type="number" id="rank-input" class="form-control" placeholder="e.g. 15000" min="1" max="1000000" required />
+                <div class="form-hint" id="rank-hint" data-i18n="wizard.rank.hint_rank">Enter your overall category or all-India rank (lower rank is better).</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- Category -->
+              <div class="form-group">
+                <label for="category-select" data-i18n="wizard.category.label">Category</label>
+                <select id="category-select" class="form-control" required>
+                  <option value="Open (Gen)">Open (General)</option>
+                  <option value="OBC-NCL">OBC-NCL</option>
+                  <option value="EWS">EWS</option>
+                  <option value="SC">SC</option>
+                  <option value="ST">ST</option>
+                </select>
+              </div>
+
+              <!-- Domicile -->
+              <div class="form-group">
+                <label for="domicile-select" data-i18n="wizard.domicile.label">Domicile State</label>
+                <select id="domicile-select" class="form-control" required>
+                  <option value="Rajasthan (Home State)" data-i18n="wizard.domicile.rajasthan">Rajasthan (Home State)</option>
+                  <option value="Other State" data-i18n="wizard.domicile.other">Other State</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- Gender -->
+              <div class="form-group">
+                <label for="gender-select" data-i18n="wizard.gender.label">Gender</label>
+                <select id="gender-select" class="form-control" required>
+                  <option value="Male" data-i18n="wizard.gender.male">Male</option>
+                  <option value="Female" data-i18n="wizard.gender.female">Female</option>
+                  <option value="Other" data-i18n="wizard.gender.other">Other</option>
+                </select>
+                <div class="form-hint" data-i18n="wizard.gender.hint">Banasthali Vidyapith is exclusively for women students.</div>
+              </div>
+
+              <!-- Family Income (Optional) -->
+              <div class="form-group">
+                <label for="income-input" data-i18n="wizard.income.label">Annual Family Income (INR, Optional)</label>
+                <input type="number" id="income-input" class="form-control" placeholder="e.g. 450000" min="0" step="10000" />
+                <div class="form-hint" data-i18n="wizard.income.hint">Used to check eligibility for fee reimbursements and scholarships.</div>
+              </div>
+            </div>
+
+            <!-- Preferred Branches Multi-select -->
+            <div class="form-group">
+              <label data-i18n="wizard.branches.label">Preferred Branches (Select one or more)</label>
+              <div class="branch-grid" id="branch-container">
+                <!-- Dynamically populated or fallback static options -->
+              </div>
+            </div>
+
+            <div class="wizard-actions">
+              <div></div>
+              <button type="button" id="btn-to-step-2" class="btn btn-primary" data-i18n="wizard.btn_next">
+                Next: Your Priorities →
+              </button>
+            </div>
+          </div>
+
+
+          <!-- ================================================================
+               STEP 2: What Matters to You
+               ================================================================ -->
+          <div id="step-2-content" style="display: none;">
+            <div style="margin-bottom: var(--space-6);">
+              <h3 data-i18n="wizard.priorities.title">What matters most to you? (0 to 10)</h3>
+              <p class="text-muted" data-i18n="wizard.priorities.subtitle">Adjust the sliders below to prioritize fees, career placements, location, or college brand reputation.</p>
+            </div>
+
+            <!-- Slider 1: Fees -->
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">
+                  <span>💰</span>
+                  <span data-i18n="wizard.slider.fees">Affordable Fees</span>
+                </span>
+                <span class="slider-value-badge" id="val-fees">7</span>
+              </div>
+              <input type="range" id="slider-fees" class="slider-input" min="0" max="10" value="7" />
+              <div class="slider-desc" data-i18n="wizard.slider.fees_desc">Higher priority prefers government institutions and lower annual tuition.</div>
+            </div>
+
+            <!-- Slider 2: Placements -->
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">
+                  <span>📈</span>
+                  <span data-i18n="wizard.slider.placements">Placements & Salaries</span>
+                </span>
+                <span class="slider-value-badge" id="val-placements">8</span>
+              </div>
+              <input type="range" id="slider-placements" class="slider-input" min="0" max="10" value="8" />
+              <div class="slider-desc" data-i18n="wizard.slider.placements_desc">Higher priority prefers colleges with higher average & median packages and high placement percentages.</div>
+            </div>
+
+            <!-- Slider 3: Location -->
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">
+                  <span>📍</span>
+                  <span data-i18n="wizard.slider.location">Location (Near Jaipur)</span>
+                </span>
+                <span class="slider-value-badge" id="val-location">5</span>
+              </div>
+              <input type="range" id="slider-location" class="slider-input" min="0" max="10" value="5" />
+              <div class="slider-desc" data-i18n="wizard.slider.location_desc">Higher priority favors colleges located in or close to Jaipur city.</div>
+            </div>
+
+            <!-- Slider 4: Reputation -->
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">
+                  <span>🏆</span>
+                  <span data-i18n="wizard.slider.reputation">Reputation & Accreditation</span>
+                </span>
+                <span class="slider-value-badge" id="val-reputation">6</span>
+              </div>
+              <input type="range" id="slider-reputation" class="slider-input" min="0" max="10" value="6" />
+              <div class="slider-desc" data-i18n="wizard.slider.reputation_desc">Higher priority rewards top NAAC grades (A/A++), NBA accredited programs, and top NIRF rankings.</div>
+            </div>
+
+            <!-- Toggle: Need Hostel -->
+            <div class="toggle-group">
+              <div>
+                <strong data-i18n="wizard.hostel.label">I need hostel accommodation</strong>
+                <div class="form-hint" data-i18n="wizard.hostel.desc">Adds annual hostel fees to the total estimated yearly college expenditure.</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggle-hostel" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="wizard-actions">
+              <button type="button" id="btn-back-to-step-1" class="btn btn-secondary" data-i18n="wizard.btn_back">
+                ← Back
+              </button>
+              <button type="submit" class="btn btn-primary btn-lg" data-i18n="wizard.btn_submit">
+                Find Colleges Now →
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <p data-i18n="footer.disclaimer">Disclaimer: All cutoff, fee, placement, and scholarship figures are synthetic mock data intended solely for academic demonstration and portfolio evaluation.</p>
+        <p style="margin-top:4px;" data-i18n="footer.built_with">Built with vanilla web standards for Rajasthan engineering aspirants.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Branch list: ask the server (always matches the data); typed-in list is the backup
+      let branches = [
+        'Computer Science & Engineering',
+        'CSE (AI & ML)',
+        'Information Technology',
+        'Electronics & Communication',
+        'Electrical Engineering',
+        'Electrical & Electronics',
+        'Mechanical Engineering',
+        'Civil Engineering',
+        'Communication & Computer Engg',
+        'Computer Science'
+      ];
+      const fromServer = await window.API.branches();
+      if (fromServer.list) branches = fromServer.list;
+
+      const branchContainer = document.getElementById('branch-container');
+      branches.forEach(b => {
+        const label = document.createElement('label');
+        label.className = 'branch-option';
+        label.innerHTML = `
+          <input type="checkbox" name="branch" value="${b}">
+          <span>${b}</span>
+        `;
+        const cb = label.querySelector('input');
+        cb.addEventListener('change', () => {
+          if (cb.checked) label.classList.add('selected');
+          else label.classList.remove('selected');
+        });
+        branchContainer.appendChild(label);
+      });
+
+      // 2. Exam change logic (BITSAT dynamic score vs rank)
+      const examSelect = document.getElementById('exam-select');
+      const rankLabel = document.getElementById('rank-label');
+      const rankInput = document.getElementById('rank-input');
+      const rankHint = document.getElementById('rank-hint');
+
+      function updateExamInput() {
+        const isBitsat = examSelect.value === 'BITSAT';
+        if (isBitsat) {
+          rankLabel.setAttribute('data-i18n', 'wizard.rank.label_score');
+          rankLabel.textContent = window.t('wizard.rank.label_score');
+          rankInput.placeholder = window.t('wizard.rank.placeholder_score');
+          rankInput.max = 390;
+          rankHint.setAttribute('data-i18n', 'wizard.rank.hint_score');
+          rankHint.textContent = window.t('wizard.rank.hint_score');
+        } else {
+          rankLabel.setAttribute('data-i18n', 'wizard.rank.label_rank');
+          rankLabel.textContent = window.t('wizard.rank.label_rank');
+          rankInput.placeholder = window.t('wizard.rank.placeholder_rank');
+          rankInput.removeAttribute('max');
+          rankHint.setAttribute('data-i18n', 'wizard.rank.hint_rank');
+          rankHint.textContent = window.t('wizard.rank.hint_rank');
+        }
+      }
+
+      examSelect.addEventListener('change', updateExamInput);
+      window.addEventListener('languageChanged', updateExamInput);
+
+      // 3. Slider Live Value badges
+      const sliders = ['fees', 'placements', 'location', 'reputation'];
+      sliders.forEach(key => {
+        const slider = document.getElementById(`slider-${key}`);
+        const badge = document.getElementById(`val-${key}`);
+        slider.addEventListener('input', () => {
+          badge.textContent = slider.value;
+        });
+      });
+
+      // 4. Wizard Step Navigation
+      const step1Content = document.getElementById('step-1-content');
+      const step2Content = document.getElementById('step-2-content');
+      const step1Pill = document.getElementById('step1-pill');
+      const step2Pill = document.getElementById('step2-pill');
+      const btnToStep2 = document.getElementById('btn-to-step-2');
+      const btnBackToStep1 = document.getElementById('btn-back-to-step-1');
+
+      btnToStep2.addEventListener('click', () => {
+        // Validation check for rank
+        if (!rankInput.value || Number(rankInput.value) <= 0) {
+          rankInput.focus();
+          alert(window.t ? (examSelect.value === 'BITSAT' ? 'Please enter a valid BITSAT score (0-390)' : 'Please enter your entrance exam rank') : 'Please enter your rank/score');
+          return;
+        }
+
+        step1Content.style.display = 'none';
+        step2Content.style.display = 'block';
+        step1Pill.classList.remove('active');
+        step1Pill.classList.add('completed');
+        step2Pill.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      btnBackToStep1.addEventListener('click', () => {
+        step2Content.style.display = 'none';
+        step1Content.style.display = 'block';
+        step2Pill.classList.remove('active');
+        step1Pill.classList.remove('completed');
+        step1Pill.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // 5. Restore previous state from sessionStorage if available
+      try {
+        const saved = sessionStorage.getItem('reap_student_profile');
+        if (saved) {
+          const profile = JSON.parse(saved);
+          if (profile.exam) examSelect.value = profile.exam;
+          updateExamInput();
+          if (profile.rankOrScore) rankInput.value = profile.rankOrScore;
+          if (profile.category) document.getElementById('category-select').value = profile.category;
+          if (profile.domicile) document.getElementById('domicile-select').value = profile.domicile;
+          if (profile.gender) document.getElementById('gender-select').value = profile.gender;
+          if (profile.familyIncome) document.getElementById('income-input').value = profile.familyIncome;
+          
+          if (profile.preferredBranches) {
+            document.querySelectorAll('#branch-container input').forEach(cb => {
+              if (profile.preferredBranches.includes(cb.value)) {
+                cb.checked = true;
+                cb.parentElement.classList.add('selected');
+              }
+            });
+          }
+
+          if (profile.priorities) {
+            sliders.forEach(k => {
+              if (profile.priorities[k] !== undefined) {
+                document.getElementById(`slider-${k}`).value = profile.priorities[k];
+                document.getElementById(`val-${k}`).textContent = profile.priorities[k];
+              }
+            });
+          }
+
+          if (profile.needHostel !== undefined) {
+            document.getElementById('toggle-hostel').checked = profile.needHostel;
+          }
+        }
+      } catch (e) {}
+
+      // 6. Form Submission
+      const form = document.getElementById('find-college-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Collect selected branches
+        const selectedBranches = [];
+        document.querySelectorAll('#branch-container input:checked').forEach(cb => {
+          selectedBranches.push(cb.value);
+        });
+
+        const profile = {
+          exam: examSelect.value,
+          rankOrScore: Number(rankInput.value),
+          category: document.getElementById('category-select').value,
+          domicile: document.getElementById('domicile-select').value,
+          gender: document.getElementById('gender-select').value,
+          familyIncome: document.getElementById('income-input').value ? Number(document.getElementById('income-input').value) : null,
+          preferredBranches: selectedBranches,
+          priorities: {
+            fees: Number(document.getElementById('slider-fees').value),
+            placements: Number(document.getElementById('slider-placements').value),
+            location: Number(document.getElementById('slider-location').value),
+            reputation: Number(document.getElementById('slider-reputation').value)
+          },
+          needHostel: document.getElementById('toggle-hostel').checked
+        };
+
+        sessionStorage.setItem('reap_student_profile', JSON.stringify(profile));
+        window.location.href = 'results.html';
+      });
+    });
+  </script>
+</body>
+</html>

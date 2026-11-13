@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Scholarships - Rajasthan College Compass</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Sticky Demo Banner -->
+  <div class="demo-banner">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span data-i18n="banner.demo">Demo data, not for real decisions.</span>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="dot"></span>
+        <span data-i18n="brand.name">Rajasthan College Compass</span>
+        <span class="badge-state">REAP</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="results.html" data-i18n="nav.results">Recommendations</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="branch-vs-college.html" data-i18n="nav.branch_vs_college">Branch vs College</a></li>
+        <li><a href="scholarships.html" class="active" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" aria-label="Toggle language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-toggle-btn" data-i18n="lang.toggle">हिन्दी</span>
+        </button>
+
+        <button class="mobile-menu-btn" aria-label="Open navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: var(--space-8);">
+        <h1 data-i18n="scholarships.title">Engineering Scholarships in Rajasthan</h1>
+        <p class="text-muted" data-i18n="scholarships.subtitle">
+          Explore government and institutional scholarship schemes, fee waivers, and financial aid.
+        </p>
+      </div>
+
+      <!-- Filter Controls Bar -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <!-- Category Filter -->
+          <div class="filter-item">
+            <label for="filter-category" style="font-size:0.85rem; font-weight:600;" data-i18n="scholarships.filter.cat">Category:</label>
+            <select id="filter-category" class="filter-select">
+              <option value="ALL" data-i18n="scholarships.filter.cat_all">All Categories</option>
+              <option value="Open (Gen)">Open (Gen)</option>
+              <option value="OBC-NCL">OBC-NCL</option>
+              <option value="EWS">EWS</option>
+              <option value="SC">SC</option>
+              <option value="ST">ST</option>
+              <option value="Female">Female Students Only</option>
+            </select>
+          </div>
+
+          <!-- Family Income Ceiling Filter -->
+          <div class="filter-item">
+            <label for="filter-income" style="font-size:0.85rem; font-weight:600;" data-i18n="scholarships.filter.income">Max Income:</label>
+            <select id="filter-income" class="filter-select">
+              <option value="ALL" data-i18n="scholarships.filter.income_any">Any Income Level</option>
+              <option value="250000">Up to ₹2,50,000 / year</option>
+              <option value="500000">Up to ₹5,00,000 / year</option>
+              <option value="800000">Up to ₹8,00,000 / year</option>
+            </select>
+          </div>
+
+          <!-- Provider Filter -->
+          <div class="filter-item">
+            <label for="filter-provider" style="font-size:0.85rem; font-weight:600;">Provider:</label>
+            <select id="filter-provider" class="filter-select">
+              <option value="ALL">All Providers</option>
+              <option value="State Govt">State Govt</option>
+              <option value="Central Govt">Central Govt</option>
+              <option value="College">College Specific</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scholarships List Container -->
+      <div id="scholarships-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="scholarships-empty" class="card text-center" style="display:none; padding: var(--space-12);">
+        <div style="font-size: 3rem; margin-bottom: var(--space-3);">📜</div>
+        <h3 data-i18n="scholarships.empty">No scholarships matched the selected category and income filters.</h3>
+        <p class="text-muted" style="margin-top: 8px;">Try selecting "All Categories" or "Any Income Level" above.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <p data-i18n="footer.disclaimer">Disclaimer: All cutoff, fee, placement, and scholarship figures are synthetic mock data intended solely for academic demonstration and portfolio evaluation.</p>
+        <p style="margin-top:4px;" data-i18n="footer.built_with">Built with vanilla web standards for Rajasthan engineering aspirants.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { source } = await window.API.loadData();   // use the server's data (falls back to data.js)
+      window.API.badge(source);
+      if (!window.SCHOLARSHIPS_DATA) return;
+
+      const catSelect = document.getElementById('filter-category');
+      const incomeSelect = document.getElementById('filter-income');
+      const providerSelect = document.getElementById('filter-provider');
+      const container = document.getElementById('scholarships-list');
+      const emptyBox = document.getElementById('scholarships-empty');
+
+      // Pre-fill filters if student profile is in sessionStorage
+      try {
+        const stored = sessionStorage.getItem('reap_student_profile');
+        if (stored) {
+          const profile = JSON.parse(stored);
+          if (profile.category) {
+            catSelect.value = profile.category;
+          }
+          if (profile.familyIncome) {
+            const inc = Number(profile.familyIncome);
+            if (inc <= 250000) incomeSelect.value = '250000';
+            else if (inc <= 500000) incomeSelect.value = '500000';
+            else if (inc <= 800000) incomeSelect.value = '800000';
+          }
+        }
+      } catch (e) {}
+
+      function renderScholarships() {
+        const selCat = catSelect.value;
+        const selIncome = incomeSelect.value;
+        const selProvider = providerSelect.value;
+
+        const filtered = window.SCHOLARSHIPS_DATA.filter(s => {
+          // Provider filter
+          if (selProvider !== 'ALL' && s['Provider Type'] !== selProvider) return false;
+
+          // Category filter
+          if (selCat !== 'ALL') {
+            const elig = s['Eligible Category'] || 'All';
+            if (selCat === 'Female') {
+              if (!elig.includes('female')) return false;
+            } else {
+              const matches = (
+                elig === 'All' ||
+                elig.includes(selCat) ||
+                (elig.includes('SC') && selCat === 'SC') ||
+                (elig.includes('ST') && selCat === 'ST') ||
+                (elig.includes('OBC') && selCat === 'OBC-NCL') ||
+                (elig.includes('EWS') && selCat === 'EWS')
+              );
+              if (!matches) return false;
+            }
+          }
+
+          // Income limit filter
+          if (selIncome !== 'ALL') {
+            const limit = Number(s['Income Limit (INR/yr)']);
+            const userIncome = Number(selIncome);
+            if (limit && limit < userIncome) {
+              return false; // Scheme requires stricter lower income than selected
+            }
+          }
+
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = '';
+          emptyBox.style.display = 'block';
+          return;
+        }
+
+        emptyBox.style.display = 'none';
+
+        container.innerHTML = filtered.map(s => {
+          const amount = Number(s['Benefit Amount (INR/yr)']);
+          const pct = s['Benefit as % of Tuition'];
+          let benefitStr = '';
+          if (amount) {
+            benefitStr = `₹${amount.toLocaleString('en-IN')} / yr`;
+          } else if (pct) {
+            benefitStr = `${pct}% Tuition Waiver`;
+          } else {
+            benefitStr = s['Benefit Type'] || 'Financial Grant';
+          }
+
+          const limit = Number(s['Income Limit (INR/yr)']);
+          const limitStr = limit ? `₹${limit.toLocaleString('en-IN')} / yr` : 'No Income Ceiling';
+
+          return `
+            <div class="scholarship-card">
+              <div class="scholarship-top">
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+                    <span class="badge ${s['Provider Type'] === 'State Govt' ? 'badge-safe' : 'badge-target'}">
+                      ${s['Provider Type']}
+                    </span>
+                    <span class="badge badge-mock">Demo Data</span>
+                    <span style="font-size:0.85rem; color:var(--color-text-muted);">
+                      Applicable: <strong>${s['College Name']}</strong>
+                    </span>
+                  </div>
+                  <h3 style="font-size:1.2rem; color:var(--color-primary);">${s['Scholarship Name']}</h3>
+                </div>
+
+                <div class="scholarship-benefit">
+                  <div class="amount">${benefitStr}</div>
+                  <span style="font-size:0.75rem; color:var(--color-text-muted); text-transform:uppercase;">${s['Benefit Type']}</span>
+                </div>
+              </div>
+
+              <!-- Scholarship Details Grid -->
+              <div class="card-metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                <div class="metric-box">
+                  <h5 data-i18n="scholarships.benefit_type">Eligible Category</h5>
+                  <p style="font-size:0.95rem; font-weight:600;">${s['Eligible Category'] || 'All'}</p>
+                </div>
+                <div class="metric-box">
+                  <h5 data-i18n="scholarships.income_limit">Income Ceiling</h5>
+                  <p style="font-size:0.95rem; font-weight:600;">${limitStr}</p>
+                </div>
+                <div class="metric-box">
+                  <h5 data-i18n="scholarships.merit_rule">Merit Requirement</h5>
+                  <p style="font-size:0.95rem; font-weight:600;">${s['Merit Criterion'] || 'Admission in Approved Course'}</p>
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:flex-end; margin-top:4px;">
+                <button class="btn btn-outline btn-sm" onclick="alert('Demo application portal link. Real links will be connected in live production.');">
+                  Official Portal / Details ↗
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (window.I18n) {
+          window.I18n.translateDOM(container);
+        }
+      }
+
+      catSelect.addEventListener('change', renderScholarships);
+      incomeSelect.addEventListener('change', renderScholarships);
+      providerSelect.addEventListener('change', renderScholarships);
+      window.addEventListener('languageChanged', renderScholarships);
+
+      renderScholarships();
+    });
+  </script>
+</body>
+</html>

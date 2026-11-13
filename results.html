@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Recommendations - Rajasthan College Compass</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Sticky Demo Banner -->
+  <div class="demo-banner">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span data-i18n="banner.demo">Demo data, not for real decisions.</span>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="dot"></span>
+        <span data-i18n="brand.name">Rajasthan College Compass</span>
+        <span class="badge-state">REAP</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="results.html" class="active" data-i18n="nav.results">Recommendations</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="branch-vs-college.html" data-i18n="nav.branch_vs_college">Branch vs College</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" aria-label="Toggle language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-toggle-btn" data-i18n="lang.toggle">हिन्दी</span>
+        </button>
+
+        <button class="mobile-menu-btn" aria-label="Open navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Summary Header Bar -->
+      <div class="results-header">
+        <div>
+          <h1 data-i18n="results.title">Recommended Colleges For You</h1>
+          <p class="text-muted" data-i18n="results.subtitle">Ranked based on your entrance rank, eligible branches, and weighted priorities.</p>
+          <div class="search-summary-pills" id="summary-pills" style="margin-top: 8px;">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+        <div>
+          <a href="find.html" class="btn btn-secondary btn-sm" data-i18n="results.edit_pref">
+            ✏️ Edit Preferences
+          </a>
+        </div>
+      </div>
+
+      <!-- Filters & Sorting Bar -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <!-- Type Filter -->
+          <div class="filter-item">
+            <label for="filter-type" style="font-size:0.85rem; font-weight:600;" data-i18n="results.filter.type">Type:</label>
+            <select id="filter-type" class="filter-select">
+              <option value="ALL" data-i18n="results.filter.type_all">All Types</option>
+              <option value="Govt" data-i18n="results.filter.type_govt">Govt Only</option>
+              <option value="Private" data-i18n="results.filter.type_pvt">Private Only</option>
+              <option value="Deemed" data-i18n="results.filter.type_deemed">Deemed Only</option>
+            </select>
+          </div>
+
+          <!-- City Filter -->
+          <div class="filter-item">
+            <label for="filter-city" style="font-size:0.85rem; font-weight:600;" data-i18n="results.filter.city">City:</label>
+            <select id="filter-city" class="filter-select">
+              <option value="ALL" data-i18n="results.filter.city_all">All Cities</option>
+            </select>
+          </div>
+
+          <!-- Budget Filter -->
+          <div class="filter-item">
+            <label for="filter-budget" style="font-size:0.85rem; font-weight:600;" data-i18n="results.filter.budget">Max Annual Fees:</label>
+            <select id="filter-budget" class="filter-select">
+              <option value="ALL" data-i18n="results.filter.budget_all">Any Budget</option>
+              <option value="100000">≤ ₹1,00,000</option>
+              <option value="200000">≤ ₹2,00,000</option>
+              <option value="300000">≤ ₹3,00,000</option>
+              <option value="500000">≤ ₹5,00,000</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Sort Control -->
+        <div class="filter-item">
+          <label for="sort-select" style="font-size:0.85rem; font-weight:600;" data-i18n="results.sort.label">Sort By:</label>
+          <select id="sort-select" class="filter-select">
+            <option value="match" data-i18n="results.sort.match">Best Overall Match</option>
+            <option value="fees" data-i18n="results.sort.fees">Lowest Total Fees</option>
+            <option value="placements" data-i18n="results.sort.placements">Highest Avg Package</option>
+            <option value="distance" data-i18n="results.sort.distance">Closest to Jaipur</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- College Cards Container -->
+      <div id="cards-container" class="cards-grid">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="no-results-box" class="card text-center" style="display:none; padding: var(--space-12);">
+        <div style="font-size: 3rem; margin-bottom: var(--space-3);">🔍</div>
+        <h3 data-i18n="results.no_matches">No colleges matched your exact criteria.</h3>
+        <p class="text-muted" style="max-width:500px; margin: 8px auto 20px;" data-i18n="results.no_matches_tip">
+          Try increasing your budget filter, broadening branch preferences, or adjusting your rank.
+        </p>
+        <a href="find.html" class="btn btn-primary" data-i18n="results.edit_pref">Edit Preferences</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <p data-i18n="footer.disclaimer">Disclaimer: All cutoff, fee, placement, and scholarship figures are synthetic mock data intended solely for academic demonstration and portfolio evaluation.</p>
+        <p style="margin-top:4px;" data-i18n="footer.built_with">Built with vanilla web standards for Rajasthan engineering aspirants.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/recommender.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await window.API.loadData();   // use the server's data (falls back to data.js)
+      // 1. Retrieve profile from sessionStorage or use standard realistic default
+      let profile;
+      try {
+        const stored = sessionStorage.getItem('reap_student_profile');
+        if (stored) {
+          profile = JSON.parse(stored);
+        }
+      } catch (e) {}
+
+      if (!profile) {
+        // Realistic default sample profile for demonstration
+        profile = {
+          exam: 'JEE Main',
+          rankOrScore: 28000,
+          category: 'Open (Gen)',
+          domicile: 'Rajasthan (Home State)',
+          gender: 'Male',
+          preferredBranches: ['Computer Science & Engineering', 'Information Technology', 'Electronics & Communication'],
+          familyIncome: 600000,
+          priorities: { fees: 7, placements: 8, location: 6, reputation: 7 },
+          needHostel: true
+        };
+      }
+
+      // 2. Render Search Summary Pills
+      const summaryContainer = document.getElementById('summary-pills');
+      summaryContainer.innerHTML = `
+        <span class="summary-pill">📝 ${profile.exam}: <strong>${profile.rankOrScore.toLocaleString()}</strong></span>
+        <span class="summary-pill">👤 ${profile.category}</span>
+        <span class="summary-pill">🏠 ${profile.domicile.includes('Home') ? 'Rajasthan' : 'Other State'}</span>
+        ${profile.needHostel ? '<span class="summary-pill">🛏️ Hostel Included</span>' : ''}
+      `;
+
+      // 3. Populate Cities in Filter Dropdown
+      const citySelect = document.getElementById('filter-city');
+      if (window.COLLEGES_DATA) {
+        const cities = Array.from(new Set(window.COLLEGES_DATA.map(c => c['City']))).sort();
+        cities.forEach(city => {
+          const opt = document.createElement('option');
+          opt.value = city;
+          opt.textContent = city;
+          citySelect.appendChild(opt);
+        });
+      }
+
+      // 4. Run Recommendation Pipeline
+      let allResults = [];   // filled in below, after the backend answers
+
+      // 5. Render Function
+      function renderCards() {
+        const typeFilter = document.getElementById('filter-type').value;
+        const cityFilter = document.getElementById('filter-city').value;
+        const budgetFilter = document.getElementById('filter-budget').value;
+        const sortMode = document.getElementById('sort-select').value;
+
+        // Apply UI Filters
+        let filtered = allResults.filter(item => {
+          if (typeFilter !== 'ALL' && item.type !== typeFilter) return false;
+          if (cityFilter !== 'ALL' && item.city !== cityFilter) return false;
+          if (budgetFilter !== 'ALL' && item.totalAnnualCost > Number(budgetFilter)) return false;
+          return true;
+        });
+
+        // Apply Sorting
+        filtered.sort((a, b) => {
+          if (sortMode === 'fees') return a.totalAnnualCost - b.totalAnnualCost;
+          if (sortMode === 'placements') {
+            const pkgA = a.placementStats ? Number(a.placementStats['Avg Package (LPA)']) : 0;
+            const pkgB = b.placementStats ? Number(b.placementStats['Avg Package (LPA)']) : 0;
+            return pkgB - pkgA;
+          }
+          if (sortMode === 'distance') return a.distanceFromJaipur - b.distanceFromJaipur;
+          return b.matchScore - a.matchScore; // Default: Best Match
+        });
+
+        const cardsContainer = document.getElementById('cards-container');
+        const noResultsBox = document.getElementById('no-results-box');
+
+        if (filtered.length === 0) {
+          cardsContainer.innerHTML = '';
+          noResultsBox.style.display = 'block';
+          return;
+        }
+
+        noResultsBox.style.display = 'none';
+        const compareList = window.App ? window.App.getCompareList() : [];
+
+        // Build HTML for cards
+        cardsContainer.innerHTML = filtered.map(item => {
+          // Chance tag badge styling
+          let chanceBadgeClass = 'badge-target';
+          let chanceI18n = 'results.chance.target';
+          if (item.bestChance === 'Safe') {
+            chanceBadgeClass = 'badge-safe';
+            chanceI18n = 'results.chance.safe';
+          } else if (item.bestChance === 'Reach') {
+            chanceBadgeClass = 'badge-reach';
+            chanceI18n = 'results.chance.reach';
+          }
+
+          // SVG Ring calculations: radius = 26, circumference = 2 * PI * 26 ≈ 163.36
+          const circumference = 163.36;
+          const strokeDashoffset = circumference - (item.matchScore / 100) * circumference;
+
+          // Compare state
+          const isCompared = compareList.includes(item.collegeId);
+
+          return `
+            <div class="college-card" id="card-${item.collegeId}">
+              
+              <!-- Top Row: Name, Location, Badges, Match Ring -->
+              <div class="card-top">
+                <div class="college-main-info">
+                  <div class="college-title-row">
+                    <span class="badge ${item.type === 'Govt' ? 'badge-safe' : 'badge-target'}">${item.type}</span>
+                    <span class="badge ${chanceBadgeClass}" data-i18n="${chanceI18n}">
+                      ${window.t ? window.t(chanceI18n) : item.bestChance}
+                    </span>
+                    <span class="badge ${item.confidenceBadge.class}" title="${item.confidenceBadge.tooltip}">
+                      ${item.confidenceBadge.label}
+                    </span>
+                  </div>
+
+                  <h2 class="college-name">${item.collegeName}</h2>
+                  <div class="college-location">
+                    <span>📍 ${item.city}</span>
+                    <span style="margin: 0 4px;">•</span>
+                    <span>${item.distanceFromJaipur === 0 ? 'In Jaipur' : item.distanceFromJaipur + ' km from Jaipur'}</span>
+                    <span style="margin: 0 4px;">•</span>
+                    <span>Matched Branch: <strong>${item.bestBranchName}</strong> (Cutoff: ${item.bestClosingValue.toLocaleString()})</span>
+                  </div>
+                </div>
+
+                <!-- Match Score SVG Ring -->
+                <div class="match-ring-box">
+                  <div class="ring-wrapper">
+                    <svg width="64" height="64">
+                      <circle class="ring-bg" cx="32" cy="32" r="26"></circle>
+                      <circle class="ring-progress" cx="32" cy="32" r="26" 
+                              stroke-dasharray="${circumference}" 
+                              stroke-dashoffset="${strokeDashoffset}"></circle>
+                    </svg>
+                    <div class="ring-label">${item.matchScore}%</div>
+                  </div>
+                  <span class="ring-caption" data-i18n="results.match_score">Match Score</span>
+                </div>
+              </div>
+
+              <!-- Metrics Grid (Fees & Placements) -->
+              <div class="card-metrics-grid">
+                <div class="metric-box">
+                  <h5 data-i18n="results.metric.fees">Fees / Year</h5>
+                  <p>₹${item.totalAnnualCost.toLocaleString('en-IN')}</p>
+                  <span style="font-size:0.75rem; color:var(--color-text-muted);">
+                    ${profile.needHostel ? '(Tuition + Hostel)' : '(Tuition only)'}
+                  </span>
+                </div>
+
+                <div class="metric-box">
+                  <h5 data-i18n="results.metric.avg_pkg">Avg Package</h5>
+                  <p>${item.placementStats ? item.placementStats['Avg Package (LPA)'] + ' LPA' : 'N/A'}</p>
+                </div>
+
+                <div class="metric-box">
+                  <h5 data-i18n="results.metric.median_pkg">Median Package</h5>
+                  <p>${item.placementStats ? item.placementStats['Median Package (LPA)'] + ' LPA' : 'N/A'}</p>
+                </div>
+
+                <div class="metric-box">
+                  <h5 data-i18n="results.metric.placement_rate">Placement Rate</h5>
+                  <p>${item.placementStats ? item.placementStats['Placement %'] + '%' : 'N/A'}</p>
+                </div>
+              </div>
+
+              <!-- Accreditation Chips -->
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <span class="chip">🏛️ NAAC: <strong>${item.naac}</strong></span>
+                <span class="chip">🎯 NBA: <strong>${item.nba}</strong></span>
+                <span class="chip">🏆 NIRF: <strong>${item.nirf}</strong></span>
+              </div>
+
+              <!-- Rationale: Why it fits -->
+              <div class="fit-reason">
+                <strong data-i18n="results.reason.title">Why it fits your profile:</strong> ${item.fitReason}
+              </div>
+
+              <!-- Persona: Choose it when -->
+              <div class="choose-when">
+                <strong data-i18n="results.choose_when.title">Choose this college when:</strong> ${item.chooseWhen}
+              </div>
+
+              <!-- Scholarship Hint if applicable -->
+              ${item.maxScholarship > 0 ? `
+                <div class="scholarship-hint-box">
+                  <span>🎓</span>
+                  <span>${window.t ? window.t('results.scholarship_qualify', { amount: item.maxScholarship.toLocaleString('en-IN') }) : `You may qualify for up to ₹${item.maxScholarship.toLocaleString('en-IN')}/yr in scholarships!`}</span>
+                </div>
+              ` : ''}
+
+              <!-- Card Footer: Compare Checkbox -->
+              <div class="card-footer">
+                <label class="compare-checkbox-label">
+                  <input type="checkbox" class="compare-card-cb" data-college-id="${item.collegeId}" ${isCompared ? 'checked' : ''}>
+                  <span data-i18n="results.compare.checkbox">Compare this college</span>
+                </label>
+                <a href="${item.college['Official Homepage']}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                  Official Website ↗
+                </a>
+              </div>
+
+            </div>
+          `;
+        }).join('');
+
+        // Attach compare checkbox event listeners
+        document.querySelectorAll('.compare-card-cb').forEach(cb => {
+          cb.addEventListener('change', (e) => {
+            const cid = e.target.getAttribute('data-college-id');
+            if (e.target.checked) {
+              const success = window.App.addToCompare(cid);
+              if (!success) {
+                e.target.checked = false;
+              }
+            } else {
+              window.App.removeFromCompare(cid);
+            }
+          });
+        });
+
+        // Translate freshly rendered dynamic nodes
+        if (window.I18n) {
+          window.I18n.translateDOM(cardsContainer);
+        }
+      }
+
+      // Initial render: ask the backend first, fall back to local JS if it's offline
+      (async () => {
+        const { results, source } = await window.API.recommend(profile);
+        allResults = results;
+
+        const pill = document.createElement('span');
+        pill.className = 'summary-pill';
+        pill.textContent = source === 'api' ? '⚙️ Powered by: Python API' : '💻 Powered by: Browser (offline mode)';
+        summaryContainer.appendChild(pill);
+
+        renderCards();
+      })();
+
+      // Bind filter controls
+      document.getElementById('filter-type').addEventListener('change', renderCards);
+      document.getElementById('filter-city').addEventListener('change', renderCards);
+      document.getElementById('filter-budget').addEventListener('change', renderCards);
+      document.getElementById('sort-select').addEventListener('change', renderCards);
+
+      // Re-render when language or compare list changes
+      window.addEventListener('languageChanged', renderCards);
+      window.addEventListener('compareListChanged', () => {
+        const compareList = window.App ? window.App.getCompareList() : [];
+        document.querySelectorAll('.compare-card-cb').forEach(cb => {
+          const cid = cb.getAttribute('data-college-id');
+          cb.checked = compareList.includes(cid);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

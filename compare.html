@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Colleges - Rajasthan College Compass</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Sticky Demo Banner -->
+  <div class="demo-banner">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span data-i18n="banner.demo">Demo data, not for real decisions.</span>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="dot"></span>
+        <span data-i18n="brand.name">Rajasthan College Compass</span>
+        <span class="badge-state">REAP</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="results.html" data-i18n="nav.results">Recommendations</a></li>
+        <li><a href="compare.html" class="active" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="branch-vs-college.html" data-i18n="nav.branch_vs_college">Branch vs College</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" aria-label="Toggle language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-toggle-btn" data-i18n="lang.toggle">हिन्दी</span>
+        </button>
+
+        <button class="mobile-menu-btn" aria-label="Open navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: var(--space-8);">
+        <h1 data-i18n="compare.title">College Trade-off Comparison</h1>
+        <p class="text-muted" data-i18n="compare.subtitle">
+          Compare 2 to 3 colleges side-by-side to understand exactly what you gain and lose with each choice.
+        </p>
+      </div>
+
+      <!-- College Selection Dropdowns -->
+      <div class="card" style="margin-bottom: var(--space-6);">
+        <div class="compare-selectors">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="select-col-1" data-i18n="compare.select1">Select College 1</label>
+            <select id="select-col-1" class="form-control"></select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="select-col-2" data-i18n="compare.select2">Select College 2</label>
+            <select id="select-col-2" class="form-control"></select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="select-col-3" data-i18n="compare.select3">Select College 3 (Optional)</label>
+            <select id="select-col-3" class="form-control">
+              <option value="">-- None --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Matrix Table -->
+      <div class="compare-table-wrapper" id="table-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Trade-off Analysis Cards ("You Gain / You Lose") -->
+      <section class="tradeoff-section">
+        <h2 style="margin-bottom: var(--space-4);" data-i18n="compare.tradeoff.title">Direct Trade-off Analysis</h2>
+        <div id="tradeoff-cards-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <p data-i18n="footer.disclaimer">Disclaimer: All cutoff, fee, placement, and scholarship figures are synthetic mock data intended solely for academic demonstration and portfolio evaluation.</p>
+        <p style="margin-top:4px;" data-i18n="footer.built_with">Built with vanilla web standards for Rajasthan engineering aspirants.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="find.html" data-i18n="nav.find">Find My College</a></li>
+        <li><a href="compare.html" data-i18n="nav.compare">Compare</a></li>
+        <li><a href="scholarships.html" data-i18n="nav.scholarships">Scholarships</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/recommender.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await window.API.loadData();   // use the server's data (falls back to data.js)
+      const select1 = document.getElementById('select-col-1');
+      const select2 = document.getElementById('select-col-2');
+      const select3 = document.getElementById('select-col-3');
+
+      if (!window.COLLEGES_DATA) return;
+
+      // 1. Populate Dropdown Options with Colleges
+      function populateOptions() {
+        const sortedColleges = [...window.COLLEGES_DATA].sort((a, b) => a['College Name'].localeCompare(b['College Name']));
+        
+        [select1, select2].forEach(sel => {
+          sel.innerHTML = '';
+          sortedColleges.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c['College ID'];
+            opt.textContent = `${c['College Name']} (${c['City']})`;
+            sel.appendChild(opt);
+          });
+        });
+
+        select3.innerHTML = '<option value="">-- None --</option>';
+        sortedColleges.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c['College ID'];
+          opt.textContent = `${c['College Name']} (${c['City']})`;
+          select3.appendChild(opt);
+        });
+      }
+
+      populateOptions();
+
+      // 2. Pre-select colleges from compare session or URL or defaults
+      let preselected = window.App ? window.App.getCompareList() : [];
+      
+      // Fallback defaults if none selected: C01 (MNIT Jaipur) and C04 (CTAE Udaipur)
+      if (preselected.length === 0) {
+        preselected = ['C01', 'C04'];
+      } else if (preselected.length === 1) {
+        preselected.push(preselected[0] === 'C01' ? 'C04' : 'C01');
+      }
+
+      if (preselected[0]) select1.value = preselected[0];
+      if (preselected[1]) select2.value = preselected[1];
+      if (preselected[2]) select3.value = preselected[2];
+
+      // 3. Render Comparison Table & Trade-off Cards
+      let runCounter = 0;   // so a slow old answer can't overwrite a newer one
+      async function renderComparison() {
+        const myRun = ++runCounter;
+        const ids = [select1.value, select2.value, select3.value].filter(Boolean);
+        // Ensure unique
+        const uniqueIds = Array.from(new Set(ids));
+        
+        // Save back to compare list
+        if (window.App) {
+          window.App.setCompareList(uniqueIds);
+        }
+
+        const localColleges = uniqueIds.map(id => {
+          const raw = window.COLLEGES_DATA.find(c => c['College ID'] === id);
+          const placements = window.Recommender ? window.Recommender.getLatestPlacements(id) : null;
+          const tuition = Number(raw['Annual Tuition (INR)']) || 0;
+          const hostel = Number(raw['Hostel Fee / Year (INR)']) || 0;
+          return {
+            raw,
+            collegeId: id,
+            collegeName: raw['College Name'],
+            city: raw['City'],
+            type: raw['Type'],
+            annualTuition: tuition,
+            annualHostel: hostel,
+            totalAnnualCost: tuition + hostel,
+            placementStats: placements,
+            distanceFromJaipur: Number(raw['Distance from Jaipur (km, approx)']) || 0,
+            naac: raw['NAAC Grade'] || 'N/A',
+            nba: raw['NBA Accredited'] || 'No',
+            nirf: raw['NIRF Engineering Band'] || 'Not Ranked'
+          };
+        });
+
+        const tableContainer = document.getElementById('table-container');
+        const tradeoffContainer = document.getElementById('tradeoff-cards-container');
+
+        if (localColleges.length < 2) {
+          tableContainer.innerHTML = `<div class="card text-center" style="padding:var(--space-8);" data-i18n="compare.empty_state">${window.t('compare.empty_state')}</div>`;
+          tradeoffContainer.innerHTML = '';
+          return;
+        }
+
+        // Ask the Python server. If it is off, `data` is null and we use the browser chef.
+        const { data, source } = await window.API.compare(uniqueIds);
+        if (myRun !== runCounter) return;           // a newer selection already started
+        const colleges = data ? data.colleges : localColleges;
+
+        // small label so you can SEE who did the work
+        let pill = document.getElementById('source-pill');
+        if (!pill) {
+          pill = document.createElement('span');
+          pill.id = 'source-pill';
+          pill.className = 'summary-pill';
+          pill.style.cssText = 'display:inline-block; margin-top:8px;';
+          document.querySelector('main .container > div').appendChild(pill);
+        }
+        pill.textContent = source === 'api' ? '⚙️ Powered by: Python API' : '💻 Powered by: Browser (offline mode)';
+
+        // Build Comparison Matrix HTML
+        tableContainer.innerHTML = `
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;" data-i18n="compare.table.college">College Metric</th>
+                ${colleges.map(c => `<th class="col-header">${c.collegeName}</th>`).join('')}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-i18n="compare.table.city">City</td>
+                ${colleges.map(c => `<td><strong>${c.city}</strong></td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.type">Type</td>
+                ${colleges.map(c => `<td><span class="badge ${c.type === 'Govt' ? 'badge-safe' : 'badge-target'}">${c.type}</span></td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.tuition">Annual Tuition</td>
+                ${colleges.map(c => `<td>₹${c.annualTuition.toLocaleString('en-IN')}</td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.hostel">Annual Hostel Fee</td>
+                ${colleges.map(c => `<td>₹${c.annualHostel.toLocaleString('en-IN')}</td>`).join('')}
+              </tr>
+              <tr style="background-color: var(--color-surface-subtle); font-weight:700;">
+                <td data-i18n="compare.table.total_fee">Total Annual Cost</td>
+                ${colleges.map(c => `<td style="color:var(--color-primary); font-size:1.1rem;">₹${c.totalAnnualCost.toLocaleString('en-IN')}</td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.avg_pkg">Average Package</td>
+                ${colleges.map(c => `<td><strong>${c.placementStats ? c.placementStats['Avg Package (LPA)'] + ' LPA' : 'N/A'}</strong></td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.median_pkg">Median Package</td>
+                ${colleges.map(c => `<td>${c.placementStats ? c.placementStats['Median Package (LPA)'] + ' LPA' : 'N/A'}</td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.placement_rate">Placement %</td>
+                ${colleges.map(c => `<td>${c.placementStats ? c.placementStats['Placement %'] + '%' : 'N/A'}</td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.naac">NAAC Grade</td>
+                ${colleges.map(c => `<td><span class="chip">${c.naac}</span></td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.nba">NBA Accredited</td>
+                ${colleges.map(c => `<td>${c.nba}</td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.nirf">NIRF Band</td>
+                ${colleges.map(c => `<td><span class="chip">${c.nirf}</span></td>`).join('')}
+              </tr>
+              <tr>
+                <td data-i18n="compare.table.dist_jaipur">Distance from Jaipur</td>
+                ${colleges.map(c => `<td>${c.distanceFromJaipur === 0 ? 'Located in Jaipur' : c.distanceFromJaipur + ' km'}</td>`).join('')}
+              </tr>
+            </tbody>
+          </table>
+        `;
+
+        // Build Pairwise Trade-off Cards
+        // Compare Col 0 vs Col 1, and if exists Col 0 vs Col 2, and Col 1 vs Col 2
+        const pairs = [];
+        pairs.push([colleges[0], colleges[1]]);
+        if (colleges.length >= 3) {
+          pairs.push([colleges[0], colleges[2]]);
+          pairs.push([colleges[1], colleges[2]]);
+        }
+
+        const trades = data ? data.pairs : pairs.map(([a, b]) => window.Recommender.comparePair(a, b));
+        tradeoffContainer.innerHTML = pairs.map(([colA, colB], i) => {
+          const trade = trades[i];
+          return `
+            <div class="tradeoff-card">
+              <div class="tradeoff-header">
+                <div>
+                  <h3 style="font-size:1.25rem;">${colA.collegeName} <span class="text-muted">vs</span> ${colB.collegeName}</h3>
+                  <div class="text-muted" style="font-size:0.875rem;">If you choose <strong>${colA.collegeName}</strong> over ${colB.collegeName}:</div>
+                </div>
+              </div>
+
+              <div class="tradeoff-grid">
+                <div class="gain-column">
+                  <h4 data-i18n="compare.gain.title">What You Gain (✓)</h4>
+                  <ul class="tradeoff-list">
+                    ${trade.gains.map(g => `<li>${g}</li>`).join('')}
+                  </ul>
+                </div>
+
+                <div class="lose-column">
+                  <h4 data-i18n="compare.lose.title">What You Give Up (✕)</h4>
+                  <ul class="tradeoff-list">
+                    ${trade.losses.map(l => `<li>${l}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (window.I18n) {
+          window.I18n.translateDOM(tableContainer);
+          window.I18n.translateDOM(tradeoffContainer);
+        }
+      }
+
+      // Event handlers for selector changes
+      select1.addEventListener('change', renderComparison);
+      select2.addEventListener('change', renderComparison);
+      select3.addEventListener('change', renderComparison);
+      window.addEventListener('languageChanged', renderComparison);
+
+      // Initial render
+      renderComparison();
+    });
+  </script>
+</body>
+</html>
